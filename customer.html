@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PureCall - Contacts</title>
+    <title>PureCall - Contacts & Settings</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -14,265 +14,106 @@
             --text-dark: #1f2937;
             --text-gray: #6b7280;
             --border-color: #f3f4f6;
+            --danger-red: #ef4444;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-dark);
-            height: 100vh;
-            overflow: hidden; /* Prevent body scroll, use inner scroll */
-            display: flex;
-            flex-direction: column;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--text-dark); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
         /* Header */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            background: var(--white);
-            z-index: 10;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            font-size: 1.4rem;
-            color: #4b5563;
-            cursor: pointer;
-        }
-
-        .logo {
-            color: var(--primary-green);
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        /* Filter Chips */
-        .filters {
-            display: flex;
-            gap: 10px;
-            padding: 0 20px 16px 20px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .filters::-webkit-scrollbar { display: none; }
-
-        .chip {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid #e5e7eb;
-            background: var(--white);
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            font-weight: 500;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .chip.active {
-            background: var(--light-green);
-            color: var(--primary-green);
-            border-color: var(--light-green);
-        }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--white); z-index: 10; }
+        .icon-btn { background: none; border: none; font-size: 1.4rem; color: #4b5563; cursor: pointer; }
+        .logo { color: var(--primary-green); font-size: 1.4rem; font-weight: 700; }
 
         /* Main Content Area */
-        main {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
-            padding-bottom: 90px;
-            position: relative;
-        }
+        main { flex: 1; overflow-y: auto; padding-bottom: 90px; position: relative; }
+        
+        /* Views */
+        .view-section { display: none; padding: 20px; }
+        .view-section.active { display: block; }
+
+        /* Filters (Home View) */
+        .filters { display: flex; gap: 10px; padding: 0 0 16px 0; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border-color); margin-bottom: 15px;}
+        .filters::-webkit-scrollbar { display: none; }
+        .chip { padding: 8px 16px; border-radius: 20px; border: 1px solid #e5e7eb; background: var(--white); color: var(--text-gray); font-size: 0.9rem; font-weight: 500; white-space: nowrap; cursor: pointer; }
+        .chip.active { background: var(--light-green); color: var(--primary-green); border-color: var(--light-green); }
 
         /* Empty State */
-        .empty-state {
-            display: none; /* Hidden by default */
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .empty-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--light-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--primary-green);
-            margin-bottom: 20px;
-        }
-
-        .empty-state h2 {
-            font-size: 1.2rem;
-            color: var(--text-dark);
-            margin-bottom: 8px;
-        }
-
-        .empty-state p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            max-width: 250px;
-        }
+        .empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-top: 40px; }
+        .empty-icon { width: 80px; height: 80px; background: var(--light-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary-green); margin-bottom: 20px; }
+        .empty-state h2 { font-size: 1.2rem; margin-bottom: 8px; }
+        .empty-state p { color: var(--text-gray); font-size: 0.95rem; max-width: 250px; }
 
         /* Customer List */
-        .customer-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .customer-item {
-            background: var(--white);
-            padding: 16px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-
+        .customer-list { display: flex; flex-direction: column; gap: 12px; }
+        .customer-item { background: var(--white); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
         .customer-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
         .customer-info p { font-size: 0.85rem; color: var(--text-gray); }
-        
-        .call-btn {
-            background-color: var(--light-green);
-            color: var(--primary-green);
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            text-decoration: none; font-size: 1.1rem;
-        }
+        .call-btn { background-color: var(--light-green); color: var(--primary-green); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.1rem; }
+
+        /* Settings View Styles */
+        .profile-card { text-align: center; padding: 30px 20px; background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .profile-pic { width: 80px; height: 80px; border-radius: 50%; background: var(--light-green); color: var(--primary-green); display: inline-flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 15px; overflow: hidden; }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-name { font-size: 1.3rem; font-weight: bold; margin-bottom: 5px; }
+        .profile-email { color: var(--text-gray); font-size: 0.9rem; }
+
+        .settings-list { background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 20px; }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
+        .settings-item:last-child { border-bottom: none; }
+        .settings-item-left { display: flex; align-items: center; gap: 15px; color: var(--text-dark); font-weight: 500; }
+        .settings-item-left i { color: var(--primary-green); font-size: 1.2rem; width: 24px; text-align: center; }
+        .settings-item i.fa-chevron-right { color: #d1d5db; }
+
+        .btn-logout { width: 100%; background: #fff5f5; color: var(--danger-red); border: 1px solid #fee2e2; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
+        .btn-logout:active { background: #fee2e2; }
+
+        /* Toggle Switch */
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-green); }
+        input:checked + .slider:before { transform: translateX(20px); }
 
         /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: var(--white);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 12px 0 20px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 50;
-        }
-
-        .nav-item {
-            display: flex; flex-direction: column; align-items: center;
-            color: #9ca3af; text-decoration: none; font-size: 0.75rem; gap: 4px;
-            width: 30%;
-        }
-
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); display: flex; justify-content: space-around; align-items: center; padding: 12px 0 20px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 50; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #9ca3af; text-decoration: none; font-size: 0.75rem; gap: 4px; width: 30%; cursor: pointer; }
         .nav-item.active { color: var(--primary-green); }
         .nav-item i { font-size: 1.3rem; }
+        
+        .fab-container { width: 30%; display: flex; justify-content: center; }
+        .fab { background: var(--primary-green); color: var(--white); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: none; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); transform: translateY(-15px); cursor: pointer; z-index: 51; }
+        .fab.hidden { display: none; } /* Hide FAB on Settings tab */
 
-        .fab-container {
-            width: 30%;
-            display: flex;
-            justify-content: center;
-        }
-
-        .fab {
-            background: var(--primary-green);
-            color: var(--white);
-            width: 56px; height: 56px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            border: none;
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
-            transform: translateY(-15px);
-            cursor: pointer;
-            z-index: 51;
-        }
-
-        /* Sidebar Overlay & Menu */
-        .sidebar-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 99;
-            display: none; opacity: 0; transition: opacity 0.3s;
-        }
-        .sidebar {
-            position: fixed; top: 0; left: -300px; width: 280px; height: 100%;
-            background: var(--white); z-index: 100;
-            transition: left 0.3s ease;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            display: flex; flex-direction: column;
-        }
-        .sidebar-header {
-            padding: 30px 20px; background: var(--light-green);
-            color: var(--primary-green); font-size: 1.5rem; font-weight: bold;
-        }
+        /* Sidebar & Modals (Same as before) */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 99; display: none; opacity: 0; transition: opacity 0.3s; }
+        .sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--white); z-index: 100; transition: left 0.3s ease; box-shadow: 2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .sidebar-header { padding: 30px 20px; background: var(--light-green); color: var(--primary-green); font-size: 1.5rem; font-weight: bold; }
         .sidebar-links { padding: 20px 0; list-style: none; }
-        .sidebar-links li a {
-            display: flex; align-items: center; padding: 15px 20px;
-            color: var(--text-dark); text-decoration: none; font-size: 1rem;
-            gap: 15px; border-bottom: 1px solid var(--border-color);
-        }
+        .sidebar-links li a { display: flex; align-items: center; padding: 15px 20px; color: var(--text-dark); text-decoration: none; font-size: 1rem; gap: 15px; border-bottom: 1px solid var(--border-color); }
         .sidebar-links li a i { color: var(--primary-green); width: 20px; text-align: center; }
 
-        /* Full Screen Modals (Add Form, Help, About) */
-        .modal {
-            position: fixed; top: 100%; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color); z-index: 200;
-            transition: top 0.3s ease-in-out;
-            display: flex; flex-direction: column;
-        }
+        .modal { position: fixed; top: 100%; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; transition: top 0.3s ease-in-out; display: flex; flex-direction: column; }
         .modal.active { top: 0; }
-        
-        .modal-header {
-            display: flex; align-items: center; padding: 20px;
-            background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
+        .modal-header { display: flex; align-items: center; padding: 20px; background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .modal-header h2 { flex: 1; text-align: center; font-size: 1.2rem; }
-        
         .modal-content { padding: 20px; flex: 1; overflow-y: auto; }
 
-        /* Form Styles */
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--text-gray); font-size: 0.9rem;}
         .form-group input { width: 100%; padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; outline: none; }
-        .form-group input:focus { border-color: var(--primary-green); }
         .btn-submit { width: 100%; background: var(--primary-green); color: white; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; }
-
-        /* Help Support Card */
-        .support-card {
-            background: var(--white); border-radius: 16px; padding: 30px 20px;
-            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color); margin-top: 20px;
-        }
+        
+        .support-card { background: var(--white); border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-top: 20px; }
         .support-card i { font-size: 3rem; color: var(--text-dark); margin-bottom: 15px; }
         .support-card h3 { font-size: 1.4rem; margin-bottom: 10px; }
         .support-card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; }
-        .btn-support {
-            display: block; width: 100%; background: var(--primary-green); color: white;
-            padding: 15px; border-radius: 8px; text-decoration: none; font-weight: bold;
-        }
-
+        .btn-support { display: block; width: 100%; background: var(--primary-green); color: white; padding: 15px; border-radius: 8px; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Overlay & Menu -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">PureCall</div>
@@ -284,62 +125,87 @@
         </ul>
     </div>
 
-    <!-- Header -->
     <header>
         <button class="icon-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
         <div class="logo">PureCall</div>
-        <button class="icon-btn"><i class="fas fa-search"></i></button>
+        <button class="icon-btn" id="searchBtn"><i class="fas fa-search"></i></button>
     </header>
 
-    <!-- Filters -->
-    <div class="filters" id="filterContainer">
-        <div class="chip active" onclick="setFilter('All', this)">All</div>
-        <div class="chip" onclick="setFilter('Plumber', this)">Plumber</div>
-        <div class="chip" onclick="setFilter('Electrician', this)">Electrician</div>
-        <div class="chip" onclick="setFilter('Construction', this)">Construction</div>
-        <div class="chip" onclick="setFilter('Carpenter', this)">Carpenter</div>
-    </div>
-
-    <!-- Main App Content -->
     <main>
-        <!-- Empty State -->
-        <div class="empty-state" id="emptyState">
-            <div class="empty-icon">
-                <i class="fas fa-phone-alt"></i>
+        
+        <section id="homeView" class="view-section active">
+            <div class="filters" id="filterContainer">
+                <div class="chip active" onclick="setFilter('All', this)">All</div>
+                <div class="chip" onclick="setFilter('Plumber', this)">Plumber</div>
+                <div class="chip" onclick="setFilter('Electrician', this)">Electrician</div>
+                <div class="chip" onclick="setFilter('Construction', this)">Construction</div>
+                <div class="chip" onclick="setFilter('Carpenter', this)">Carpenter</div>
             </div>
-            <h2>No contacts found</h2>
-            <p>Tap the + button below to add your first contact to PureCall.</p>
-        </div>
 
-        <!-- Customer List -->
-        <div class="customer-list" id="customerList">
-            <!-- Firebase data loads here -->
-        </div>
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon"><i class="fas fa-phone-alt"></i></div>
+                <h2>No contacts found</h2>
+                <p>Tap the + button below to add your first contact to PureCall.</p>
+            </div>
+
+            <div class="customer-list" id="customerList"></div>
+        </section>
+
+        <section id="settingsView" class="view-section">
+            <div class="profile-card">
+                <div class="profile-pic" id="profilePic">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3 class="profile-name" id="profileName">Loading...</h3>
+                <p class="profile-email" id="profileEmail">Please wait</p>
+            </div>
+
+            <div class="settings-list">
+                <div class="settings-item">
+                    <div class="settings-item-left">
+                        <i class="fas fa-moon"></i> Dark Mode
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="settings-item" onclick="alert('Export feature coming soon!')">
+                    <div class="settings-item-left">
+                        <i class="fas fa-file-export"></i> Export Contacts
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+
+            <button class="btn-logout" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>
+        </section>
+
     </main>
 
-    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <a href="#" class="nav-item active">
+        <div class="nav-item active" id="navHome" onclick="switchTab('home')">
             <i class="fas fa-home"></i>
             <span>Home</span>
-        </a>
+        </div>
         <div class="fab-container">
-            <button class="fab" onclick="openModal('addModal')">
+            <button class="fab" id="fabBtn" onclick="openModal('addModal')">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
-        <a href="#" class="nav-item">
+        <div class="nav-item" id="navSettings" onclick="switchTab('settings')">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
-        </a>
+        </div>
     </nav>
 
-    <!-- Modal: Add Contact -->
     <div class="modal" id="addModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('addModal')"><i class="fas fa-arrow-left"></i></button>
             <h2>Add Contact</h2>
-            <div style="width: 24px;"></div> <!-- Spacer -->
+            <div style="width: 24px;"></div>
         </div>
         <div class="modal-content">
             <form id="addCustomerForm">
@@ -360,7 +226,6 @@
         </div>
     </div>
 
-    <!-- Modal: Help & Support -->
     <div class="modal" id="helpModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('helpModal')"><i class="fas fa-arrow-left"></i></button>
@@ -372,14 +237,11 @@
                 <i class="fas fa-headphones"></i>
                 <h3>We're Here to Help!</h3>
                 <p>Facing an issue with the app or need assistance navigating your contacts? Reach out to our dedicated support team directly.</p>
-                <a href="mailto:contact.abhivision@gmail.com" class="btn-support">
-                    <i class="fas fa-envelope" style="color:white; font-size:1rem; margin-bottom:0; margin-right:8px;"></i> Contact Support
-                </a>
+                <a href="mailto:contact.abhivision@gmail.com" class="btn-support"><i class="fas fa-envelope" style="color:white; margin-right:8px;"></i> Contact Support</a>
             </div>
         </div>
     </div>
 
-    <!-- Modal: About Us -->
     <div class="modal" id="aboutModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
@@ -394,8 +256,33 @@
         </div>
     </div>
 
-    <!-- UI Interaction Scripts -->
     <script>
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            // Reset Views
+            document.getElementById('homeView').classList.remove('active');
+            document.getElementById('settingsView').classList.remove('active');
+            
+            // Reset Nav Items
+            document.getElementById('navHome').classList.remove('active');
+            document.getElementById('navSettings').classList.remove('active');
+
+            const searchBtn = document.getElementById('searchBtn');
+            const fabBtn = document.getElementById('fabBtn');
+
+            if (tabName === 'home') {
+                document.getElementById('homeView').classList.add('active');
+                document.getElementById('navHome').classList.add('active');
+                searchBtn.style.visibility = 'visible';
+                fabBtn.classList.remove('hidden');
+            } else if (tabName === 'settings') {
+                document.getElementById('settingsView').classList.add('active');
+                document.getElementById('navSettings').classList.add('active');
+                searchBtn.style.visibility = 'hidden'; // Hide search on settings
+                fabBtn.classList.add('hidden'); // Hide + button on settings
+            }
+        }
+
         // Sidebar Toggle
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -412,30 +299,21 @@
         }
 
         // Modal Open/Close
-        function openModal(id) {
-            document.getElementById(id).classList.add('active');
-        }
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('active');
-        }
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
         // Filter Logic
-        let currentFilter = 'All';
+        let currentFilter = 'all';
         function setFilter(filterType, element) {
             currentFilter = filterType.toLowerCase();
-            
-            // Update Active Chip UI
             document.querySelectorAll('.chip').forEach(el => el.classList.remove('active'));
             element.classList.add('active');
-
-            // Filter DOM items
             filterContactsDOM();
         }
 
         function filterContactsDOM() {
             const items = document.querySelectorAll('.customer-item');
             let visibleCount = 0;
-
             items.forEach(item => {
                 const profession = item.getAttribute('data-profession').toLowerCase();
                 if (currentFilter === 'all' || profession.includes(currentFilter)) {
@@ -445,22 +323,14 @@
                     item.style.display = 'none';
                 }
             });
-
-            // Handle Empty state when filtering
-            const emptyState = document.getElementById('emptyState');
-            if (visibleCount === 0) {
-                emptyState.style.display = 'flex';
-            } else {
-                emptyState.style.display = 'none';
-            }
+            document.getElementById('emptyState').style.display = visibleCount === 0 ? 'flex' : 'none';
         }
     </script>
 
-    <!-- Firebase Integration Module -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } 
-            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCbRjKDiMFagCSH6LE-ZqpyeiRnIf0onvE",
@@ -473,12 +343,37 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
 
+        // -- Authentication & Profile Logic --
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Populate Settings Profile
+                document.getElementById('profileName').innerText = user.displayName || "PureCall User";
+                document.getElementById('profileEmail').innerText = user.email;
+                if(user.photoURL) {
+                    document.getElementById('profilePic').innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
+                }
+            } else {
+                // Not logged in? Send back to index.html
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Logout Event
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                alert("Error signing out: " + error.message);
+            });
+        });
+
+        // -- Firestore Data Logic --
         const form = document.getElementById('addCustomerForm');
         const customerListEl = document.getElementById('customerList');
         const emptyStateEl = document.getElementById('emptyState');
 
-        // Form Submit
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = form.querySelector('.btn-submit');
@@ -492,7 +387,7 @@
                     createdAt: new Date()
                 });
                 form.reset();
-                closeModal('addModal'); // Close modal on success
+                closeModal('addModal');
             } catch (error) {
                 alert("Error saving contact.");
             } finally {
@@ -500,16 +395,13 @@
             }
         });
 
-        // Fetch Data
         const q = query(collection(db, "customers"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             customerListEl.innerHTML = ''; 
-            
             if (snapshot.empty) {
                 emptyStateEl.style.display = 'flex';
             } else {
                 emptyStateEl.style.display = 'none';
-                
                 snapshot.forEach((doc) => {
                     const customer = doc.data();
                     const customerDiv = document.createElement('div');
@@ -527,8 +419,6 @@
                     `;
                     customerListEl.appendChild(customerDiv);
                 });
-                
-                // Re-apply filter if user adds data while a filter is active
                 if(typeof filterContactsDOM === 'function') filterContactsDOM();
             }
         });
