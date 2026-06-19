@@ -24,13 +24,15 @@
         /* Header */
         header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--white); z-index: 10; border-bottom: 1px solid var(--border-color); transition: background-color 0.3s, border-color 0.3s; }
         .icon-btn { background: none; border: none; font-size: 1.4rem; color: var(--text-dark); cursor: pointer; }
+        
+        /* Logo Styles */
         .logo { font-size: 1.5rem; font-weight: 800; }
         .logo-pure { color: var(--pure-black); }
         .logo-call { color: var(--primary-green); }
 
         /* Search Input */
         .search-container {
-            display: none; /* Hidden by default */
+            display: none; 
             padding: 10px 20px;
             background: var(--white);
             border-bottom: 1px solid var(--border-color);
@@ -128,18 +130,17 @@
         .sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--white); z-index: 100; transition: left 0.3s ease, background-color 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .sidebar-header { padding: 30px 20px; display: flex; justify-content: space-between; align-items: center; }
         
-        /* Sidebar Logo logic */
-        .sidebar-logo { font-size: 1.5rem; font-weight: 800; }
-        .sidebar-logo-pure { color: var(--pure-black); }
-        .sidebar-logo-order { color: #f97316; /* Orange */ }
         .sidebar-close { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-gray); background: var(--bg-color); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center;}
 
         .sidebar-links { padding: 20px 0; list-style: none; flex: 1; }
         .sidebar-links li a { display: flex; align-items: center; padding: 18px 20px; color: var(--text-dark); text-decoration: none; font-size: 1rem; font-weight: 500; gap: 15px; }
         .sidebar-links li a i { color: var(--text-gray); width: 20px; text-align: center; font-size: 1.1rem;}
         
+        /* Footer in Sidebar (PureOrder Design) */
         .sidebar-footer { padding: 20px; text-align: center; border-top: 1px solid var(--border-color); }
         .sidebar-footer-title { font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; }
+        .sidebar-logo-pure { color: var(--pure-black); }
+        .sidebar-logo-order { color: #f97316; /* Orange */ }
         .sidebar-footer-sub { color: var(--text-gray); font-size: 0.8rem; font-weight: 500; }
 
         .modal { position: fixed; top: 100%; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; transition: top 0.3s ease-in-out, background-color 0.3s; display: flex; flex-direction: column; }
@@ -161,7 +162,7 @@
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="sidebar-logo"><span class="sidebar-logo-pure">Pure</span><span class="sidebar-logo-order">Order</span></div>
+            <div class="logo"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></div>
             <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
         </div>
         <ul class="sidebar-links">
@@ -172,7 +173,7 @@
             <li><a href="#" onclick="openModal('aboutModal'); toggleSidebar();"><i class="fas fa-shield-alt"></i> About Us</a></li>
         </ul>
         <div class="sidebar-footer">
-            <div class="sidebar-logo sidebar-footer-title"><span class="sidebar-logo-pure">Pure</span><span class="sidebar-logo-order">Order</span></div>
+            <div class="sidebar-footer-title"><span class="sidebar-logo-pure">Pure</span><span class="sidebar-logo-order">Order</span></div>
             <div class="sidebar-footer-sub">Founded by Abhishek Sahoo</div>
         </div>
     </div>
@@ -221,11 +222,11 @@
             </div>
 
             <div class="donation-card">
-                <h3>Support PureCall Project</h3>
-                <p>PureCall is totally free and we don't earn a single percent profit from this app. To keep this app running, you can support us.</p>
+                <h3 style="color: var(--primary-green);">Support PureCall Project</h3>
+                <p>PureCall is totally free and we didn't earn a single percent profit from this app. To keep this app working, you can donate us.</p>
                 
                 <div class="qr-box">
-                    <img src="donation-qr.png" alt="Scan to Donate" onerror="this.src='https://via.placeholder.com/150?text=QR+Code+Missing'">
+                    <img src="donation-qr.jpg" alt="Scan to Donate" onerror="this.src='https://via.placeholder.com/150?text=QR+Code+Missing'">
                 </div>
                 <div>
                     <div class="upi-id">techie.abhishek@fam</div>
@@ -308,6 +309,39 @@
         </div>
     </div>
 
+    <div class="modal" id="helpModal">
+        <div class="modal-header">
+            <button class="icon-btn" onclick="closeModal('helpModal')"><i class="fas fa-arrow-left"></i></button>
+            <h2>Help & Support</h2>
+            <div style="width: 24px;"></div>
+        </div>
+        <div class="modal-content">
+            <div style="text-align: center; margin-top: 20px; margin-bottom: 30px;">
+                 <h2 style="font-size: 1.8rem; margin-bottom: 10px;"><span style="color: var(--pure-black);">Pure</span><span style="color: var(--primary-green);">Call</span></h2>
+            </div>
+            <div style="background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
+                <i class="fas fa-headphones" style="font-size: 2.5rem; color: var(--primary-green); margin-bottom: 15px;"></i>
+                <h3 style="font-size: 1.2rem; margin-bottom: 10px; color: var(--text-dark);">We're Here to Help!</h3>
+                <p style="font-size: 0.9rem; color: var(--text-gray); margin-bottom: 20px; line-height: 1.5;">Facing an issue with the app or need assistance navigating your contacts? Reach out to our dedicated support team directly.</p>
+                <a href="mailto:contact.abhivision@gmail.com" style="display: block; width: 100%; background: var(--primary-green); color: #ffffff; padding: 14px; border-radius: 8px; text-decoration: none; font-weight: bold;"><i class="fas fa-envelope" style="margin-right:8px;"></i> Contact Support</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="aboutModal">
+        <div class="modal-header">
+            <button class="icon-btn" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
+            <h2>About Us</h2>
+            <div style="width: 24px;"></div>
+        </div>
+        <div class="modal-content">
+            <div style="text-align: center; margin-top: 30px;">
+                <h1 style="margin-bottom: 10px;"><span style="color: var(--pure-black);">Pure</span><span style="color: var(--primary-green);">Call</span></h1>
+                <p style="color: var(--text-gray); line-height: 1.6;">Developed by AbhiVision.<br>Your secure digital diary for all professional service contacts.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
         window.allContactsData = [];
         let currentFilter = 'all'; 
@@ -333,7 +367,7 @@
                 document.getElementById('settingsView').classList.add('active');
                 document.getElementById('navSettings').classList.add('active');
                 searchBtnIcon.style.visibility = 'hidden'; 
-                searchContainer.style.display = 'none'; // Hide search bar if open
+                searchContainer.style.display = 'none'; 
                 fabBtn.classList.add('hidden'); 
             }
         }
@@ -344,7 +378,7 @@
             if (container.style.display === 'block') {
                 container.style.display = 'none';
                 document.getElementById('searchInput').value = '';
-                filterContactsDOM(); // reset filter
+                filterContactsDOM(); 
             } else {
                 container.style.display = 'block';
                 document.getElementById('searchInput').focus();
@@ -360,9 +394,7 @@
                 const name = item.querySelector('h3').innerText.toLowerCase();
                 const profession = item.getAttribute('data-profession').toLowerCase();
                 
-                // Match search term against Name OR Category
                 if (name.includes(searchTerm) || profession.includes(searchTerm)) {
-                    // Respect the active chip filter as well
                     if (currentFilter === 'all' || profession === currentFilter) {
                         item.style.display = 'flex';
                         visibleCount++;
@@ -384,7 +416,7 @@
                 document.documentElement.style.setProperty('--border-color', '#374151');
                 document.documentElement.style.setProperty('--light-green', '#064e3b');
                 document.documentElement.style.setProperty('--text-gray', '#9ca3af');
-                document.documentElement.style.setProperty('--pure-black', '#ffffff'); // Invert pure black to white in dark mode
+                document.documentElement.style.setProperty('--pure-black', '#ffffff'); 
             } else {
                 document.documentElement.style.setProperty('--bg-color', '#f9fafb');
                 document.documentElement.style.setProperty('--white', '#ffffff');
@@ -439,7 +471,6 @@
             document.querySelectorAll('.chip').forEach(el => el.classList.remove('active'));
             if(element) element.classList.add('active');
             
-            // Re-trigger search logic to apply both Search Input + Chip Filter
             const searchInput = document.getElementById('searchInput');
             searchInput.dispatchEvent(new Event('input')); 
         }
@@ -484,7 +515,6 @@
             if (user) {
                 currentUser = user;
                 
-                // Update Profile View Headers
                 let firstName = user.displayName ? user.displayName.split(' ')[0] : "User";
                 document.getElementById('profileNameSpan').innerText = firstName;
                 document.getElementById('profileEmailSpan').innerText = user.email;
@@ -509,11 +539,11 @@
 
                     if (docs.length === 0) {
                         emptyStateEl.style.display = 'flex';
-                        footer.style.display = 'none'; // Hide footer if empty
+                        footer.style.display = 'none'; 
                         renderDynamicChips(); 
                     } else {
                         emptyStateEl.style.display = 'none';
-                        footer.style.display = 'block'; // Show footer at end of list
+                        footer.style.display = 'block'; 
                         docs.forEach((customer) => {
                             const profName = customer.profession || 'Other';
                             userCategories.add(profName);
@@ -563,7 +593,7 @@
 
             const submitBtn = document.getElementById('saveSubmitBtn');
             submitBtn.innerText = "Saving...";
-            submitBtn.style.pointerEvents = "none"; // prevent double click
+            submitBtn.style.pointerEvents = "none"; 
 
             let finalCategory = document.getElementById('custCategorySelect').value;
             if (finalCategory === 'custom') {
@@ -580,15 +610,13 @@
                     createdAt: new Date()
                 });
                 
-                // Vibrate and Show Success State
                 if (navigator.vibrate) {
-                    navigator.vibrate(150); // Short 150ms vibration
+                    navigator.vibrate(150); 
                 }
                 
                 submitBtn.innerText = "Saved!";
-                submitBtn.style.background = "#059669"; // Darker green on save
+                submitBtn.style.background = "#059669"; 
                 
-                // Wait 1.5s before closing modal
                 setTimeout(() => {
                     form.reset();
                     closeModal('addModal');
