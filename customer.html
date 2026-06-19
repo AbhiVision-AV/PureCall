@@ -50,7 +50,7 @@
         .customer-list { display: flex; flex-direction: column; gap: 12px; }
         .customer-item { background: var(--white); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: background-color 0.3s, border-color 0.3s; }
         .customer-info h3 { font-size: 1.1rem; margin-bottom: 4px; color: var(--text-dark); }
-        .customer-info p { font-size: 0.85rem; color: var(--text-gray); }
+        .customer-info p { font-size: 0.85rem; color: var(--text-gray); display: inline-block; background: var(--bg-color); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-color); margin-top: 4px;}
         .call-btn { background-color: var(--light-green); color: var(--primary-green); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.1rem; }
 
         /* Settings View Styles */
@@ -104,7 +104,8 @@
 
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--text-gray); font-size: 0.9rem;}
-        .form-group input { width: 100%; padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; outline: none; background: var(--white); color: var(--text-dark); transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
+        .form-group input, .form-group select { width: 100%; padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; outline: none; background: var(--white); color: var(--text-dark); transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
+        .form-group select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; }
         .btn-submit { width: 100%; background: var(--primary-green); color: #ffffff; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; }
         
         .support-card { background: var(--white); border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-top: 20px; transition: background-color 0.3s, border-color 0.3s; }
@@ -135,15 +136,10 @@
 
     <main>
         
-        <!-- HOME VIEW -->
         <section id="homeView" class="view-section active">
             <div class="filters" id="filterContainer">
                 <div class="chip active" onclick="setFilter('All', this)">All</div>
-                <div class="chip" onclick="setFilter('Plumber', this)">Plumber</div>
-                <div class="chip" onclick="setFilter('Electrician', this)">Electrician</div>
-                <div class="chip" onclick="setFilter('Construction', this)">Construction</div>
-                <div class="chip" onclick="setFilter('Carpenter', this)">Carpenter</div>
-            </div>
+                </div>
 
             <div class="empty-state" id="emptyState">
                 <div class="empty-icon"><i class="fas fa-phone-alt"></i></div>
@@ -154,7 +150,6 @@
             <div class="customer-list" id="customerList"></div>
         </section>
 
-        <!-- SETTINGS VIEW -->
         <section id="settingsView" class="view-section">
             <div class="profile-card">
                 <div class="profile-pic" id="profilePic">
@@ -165,7 +160,6 @@
             </div>
 
             <div class="settings-list">
-                <!-- Dark Mode Toggle -->
                 <div class="settings-item">
                     <div class="settings-item-left">
                         <i class="fas fa-moon"></i> Dark Mode
@@ -175,7 +169,6 @@
                         <span class="slider"></span>
                     </label>
                 </div>
-                <!-- Export Feature -->
                 <a href="#" class="settings-item" id="exportBtn">
                     <div class="settings-item-left">
                         <i class="fas fa-file-export"></i> Export Contacts
@@ -207,7 +200,6 @@
         </a>
     </nav>
 
-    <!-- Modal: Add Contact -->
     <div class="modal" id="addModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('addModal')"><i class="fas fa-arrow-left"></i></button>
@@ -218,12 +210,22 @@
             <form id="addCustomerForm">
                 <div class="form-group">
                     <label>Full Name</label>
-                    <input type="text" id="custName" placeholder="e.g. John Doe" required>
+                    <input type="text" id="custName" placeholder="e.g. Rahul Sharma" required>
                 </div>
+                
                 <div class="form-group">
-                    <label>Profession / Service</label>
-                    <input type="text" id="custProfession" placeholder="e.g. Plumber, Electrician" required>
+                    <label>Category</label>
+                    <select id="custCategorySelect" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="Plumber">Plumber</option>
+                        <option value="Electrician">Electrician</option>
+                        <option value="Carpenter">Carpenter</option>
+                        <option value="Construction">Construction</option>
+                        <option value="custom" style="color: var(--primary-green); font-weight: bold;">+ Add New Category</option>
+                    </select>
+                    <input type="text" id="customCategoryInput" placeholder="Type new category name" style="display: none; margin-top: 10px;">
                 </div>
+
                 <div class="form-group">
                     <label>Phone Number</label>
                     <input type="tel" id="custPhone" placeholder="e.g. +91 9876543210" required>
@@ -233,7 +235,6 @@
         </div>
     </div>
 
-    <!-- Modal: Help & Support -->
     <div class="modal" id="helpModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('helpModal')"><i class="fas fa-arrow-left"></i></button>
@@ -250,7 +251,6 @@
         </div>
     </div>
 
-    <!-- Modal: About Us -->
     <div class="modal" id="aboutModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
@@ -265,17 +265,15 @@
         </div>
     </div>
 
-    <!-- Global State Object to Hold Active Contacts for CSV Export -->
     <script>
         window.allContactsData = [];
-    </script>
+        let currentFilter = 'all'; // Global state for filter
+        let userCategories = new Set(); // Keep track of unique categories
 
-    <script>
-        // === 1. Tab Switching Logic ===
+        // === Tab Switching Logic ===
         function switchTab(tabName) {
             document.getElementById('homeView').classList.remove('active');
             document.getElementById('settingsView').classList.remove('active');
-            
             document.getElementById('navHome').classList.remove('active');
             document.getElementById('navSettings').classList.remove('active');
 
@@ -295,7 +293,7 @@
             }
         }
 
-        // === 2. Fully Functional Dark Mode ===
+        // === Dark Mode ===
         const darkModeToggle = document.getElementById('darkModeToggle');
         darkModeToggle.addEventListener('change', (e) => {
             if(e.target.checked) {
@@ -315,7 +313,7 @@
             }
         });
 
-        // Sidebar & Modal Functions
+        // Sidebar & Modals
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -331,14 +329,34 @@
         }
 
         function openModal(id) { document.getElementById(id).classList.add('active'); }
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function closeModal(id) { 
+            document.getElementById(id).classList.remove('active'); 
+            if(id === 'addModal') {
+                // Reset custom category field when closing
+                document.getElementById('addCustomerForm').reset();
+                document.getElementById('customCategoryInput').style.display = 'none';
+                document.getElementById('customCategoryInput').required = false;
+            }
+        }
 
-        // Filter Logic
-        let currentFilter = 'all';
+        // === NEW: Dynamic Category Dropdown Handler ===
+        document.getElementById('custCategorySelect').addEventListener('change', function() {
+            const customInput = document.getElementById('customCategoryInput');
+            if(this.value === 'custom') {
+                customInput.style.display = 'block';
+                customInput.required = true;
+                customInput.focus();
+            } else {
+                customInput.style.display = 'none';
+                customInput.required = false;
+            }
+        });
+
+        // === Filter Logic ===
         function setFilter(filterType, element) {
             currentFilter = filterType.toLowerCase();
             document.querySelectorAll('.chip').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
+            if(element) element.classList.add('active');
             filterContactsDOM();
         }
 
@@ -347,7 +365,7 @@
             let visibleCount = 0;
             items.forEach(item => {
                 const profession = item.getAttribute('data-profession').toLowerCase();
-                if (currentFilter === 'all' || profession.includes(currentFilter)) {
+                if (currentFilter === 'all' || profession === currentFilter) {
                     item.style.display = 'flex';
                     visibleCount++;
                 } else {
@@ -356,12 +374,25 @@
             });
             document.getElementById('emptyState').style.display = visibleCount === 0 ? 'flex' : 'none';
         }
+
+        // Dynamically build filter chips based on user data
+        function renderDynamicChips() {
+            const filterContainer = document.getElementById('filterContainer');
+            let html = `<div class="chip ${currentFilter === 'all' ? 'active' : ''}" onclick="setFilter('All', this)">All</div>`;
+            
+            // Render a chip for every unique category the user has
+            Array.from(userCategories).sort().forEach(category => {
+                const isActive = currentFilter === category.toLowerCase() ? 'active' : '';
+                html += `<div class="chip ${isActive}" onclick="setFilter('${category}', this)">${category}</div>`;
+            });
+            
+            filterContainer.innerHTML = html;
+        }
     </script>
 
-    <!-- Firebase Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -376,14 +407,72 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        
+        let currentUser = null;
 
+        // === Authentication & SECURE Data Fetching ===
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                currentUser = user;
                 document.getElementById('profileName').innerText = user.displayName || "PureCall User";
                 document.getElementById('profileEmail').innerText = user.email;
                 if(user.photoURL) {
                     document.getElementById('profilePic').innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
                 }
+
+                // SECURE FETCH: Only get contacts where userId matches logged-in user
+                const q = query(collection(db, "customers"), where("userId", "==", user.uid));
+                
+                onSnapshot(q, (snapshot) => {
+                    const customerListEl = document.getElementById('customerList');
+                    const emptyStateEl = document.getElementById('emptyState');
+                    
+                    customerListEl.innerHTML = ''; 
+                    window.allContactsData = []; 
+                    userCategories.clear(); // Reset categories
+                    
+                    let docs = [];
+                    snapshot.forEach(doc => docs.push(doc.data()));
+                    
+                    // Client-side sort by date to avoid Firebase index requirement errors
+                    docs.sort((a, b) => b.createdAt - a.createdAt);
+
+                    if (docs.length === 0) {
+                        emptyStateEl.style.display = 'flex';
+                        renderDynamicChips(); // Will just show "All"
+                    } else {
+                        emptyStateEl.style.display = 'none';
+                        docs.forEach((customer) => {
+                            const profName = customer.profession || 'Other';
+                            userCategories.add(profName); // Add to unique categories set
+
+                            window.allContactsData.push({
+                                name: customer.name || 'N/A',
+                                profession: profName,
+                                phone: customer.phone || 'N/A'
+                            });
+
+                            const customerDiv = document.createElement('div');
+                            customerDiv.className = 'customer-item';
+                            customerDiv.setAttribute('data-profession', profName);
+                            
+                            customerDiv.innerHTML = `
+                                <div class="customer-info">
+                                    <h3>${customer.name}</h3>
+                                    <p><i class="fas fa-tag" style="margin-right:5px; color:var(--primary-green);"></i>${profName}</p>
+                                </div>
+                                <a href="tel:${customer.phone}" class="call-btn">
+                                    <i class="fas fa-phone-alt"></i>
+                                </a>
+                            `;
+                            customerListEl.appendChild(customerDiv);
+                        });
+                        
+                        renderDynamicChips(); // Update Top Filters
+                        if(typeof filterContactsDOM === 'function') filterContactsDOM();
+                    }
+                });
+
             } else {
                 window.location.href = 'index.html';
             }
@@ -397,19 +486,30 @@
             });
         });
 
+        // === Form Submit Logic with UIDs and Custom Categories ===
         const form = document.getElementById('addCustomerForm');
-        const customerListEl = document.getElementById('customerList');
-        const emptyStateEl = document.getElementById('emptyState');
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            if(!currentUser) return; // Prevent saving if not logged in
+
             const submitBtn = form.querySelector('.btn-submit');
             submitBtn.innerText = "Saving...";
 
+            // Determine final category string
+            let finalCategory = document.getElementById('custCategorySelect').value;
+            if (finalCategory === 'custom') {
+                finalCategory = document.getElementById('customCategoryInput').value.trim();
+                // Basic capitalization (e.g. "car washer" -> "Car washer")
+                finalCategory = finalCategory.charAt(0).toUpperCase() + finalCategory.slice(1);
+            }
+
             try {
+                // SECURE SAVE: Attach the user.uid to the document
                 await addDoc(collection(db, "customers"), {
+                    userId: currentUser.uid,  // <--- Privacy Link!
                     name: document.getElementById('custName').value,
-                    profession: document.getElementById('custProfession').value,
+                    profession: finalCategory,
                     phone: document.getElementById('custPhone').value,
                     createdAt: new Date()
                 });
@@ -417,77 +517,31 @@
                 closeModal('addModal');
             } catch (error) {
                 alert("Error saving contact.");
+                console.error(error);
             } finally {
                 submitBtn.innerText = "Save Contact";
             }
         });
 
-        // Track live data dynamically inside the array for export engine
-        const q = query(collection(db, "customers"), orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
-            customerListEl.innerHTML = ''; 
-            window.allContactsData = []; // Clear current buffer
-            
-            if (snapshot.empty) {
-                emptyStateEl.style.display = 'flex';
-            } else {
-                emptyStateEl.style.display = 'none';
-                snapshot.forEach((doc) => {
-                    const customer = doc.data();
-                    
-                    // Save data locally for exporting
-                    window.allContactsData.push({
-                        name: customer.name || 'N/A',
-                        profession: customer.profession || 'N/A',
-                        phone: customer.phone || 'N/A'
-                    });
-
-                    const customerDiv = document.createElement('div');
-                    customerDiv.className = 'customer-item';
-                    customerDiv.setAttribute('data-profession', customer.profession);
-                    
-                    customerDiv.innerHTML = `
-                        <div class="customer-info">
-                            <h3>${customer.name}</h3>
-                            <p>${customer.profession}</p>
-                        </div>
-                        <a href="tel:${customer.phone}" class="call-btn">
-                            <i class="fas fa-phone-alt"></i>
-                        </a>
-                    `;
-                    customerListEl.appendChild(customerDiv);
-                });
-                if(typeof filterContactsDOM === 'function') filterContactsDOM();
-            }
-        });
-
-        // === 3. Complete Export Contacts Feature Implementation ===
+        // Export Function
         document.getElementById('exportBtn').addEventListener('click', (e) => {
             e.preventDefault();
-            
             if (!window.allContactsData || window.allContactsData.length === 0) {
-                alert("No contacts available to export!");
-                return;
+                alert("No contacts available to export!"); return;
             }
-            
-            // Build real CSV structured string context
-            let csvContent = "Name,Profession,Phone Number\n";
+            let csvContent = "Name,Category,Phone Number\n";
             window.allContactsData.forEach(item => {
-                // Escape quotes just in case names contain complex strings
                 let cleanName = item.name.replace(/"/g, '""');
                 let cleanProf = item.profession.replace(/"/g, '""');
                 let cleanPhone = item.phone.replace(/"/g, '""');
                 csvContent += `"${cleanName}","${cleanProf}","${cleanPhone}"\n`;
             });
-
-            // Convert raw data to browser download link context
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const trackingLink = document.createElement('a');
             trackingLink.setAttribute('href', url);
-            trackingLink.setAttribute('download', 'PureCall_Backup_Contacts.csv');
+            trackingLink.setAttribute('download', 'PureCall_Contacts.csv');
             trackingLink.style.visibility = 'hidden';
-            
             document.body.appendChild(trackingLink);
             trackingLink.click();
             document.body.removeChild(trackingLink);
