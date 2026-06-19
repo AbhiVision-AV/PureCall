@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureCall - Customers</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #10b981; /* Emerald Green */
+            --dark-green: #047857;
+            --light-green: #d1fae5;
+            --white: #ffffff;
+            --bg-color: #f3f4f6;
+            --text-dark: #1f2937;
+            --text-gray: #6b7280;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            padding-bottom: 70px; /* Space for bottom nav */
+        }
+
+        /* App Bar */
+        header {
+            background-color: var(--white);
+            color: var(--primary-green);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--primary-green);
+            cursor: pointer;
+        }
+
+        /* Main Container */
+        .container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Form Card */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+            border-top: 4px solid var(--primary-green);
+        }
+
+        .card h2 {
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+            color: var(--dark-green);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px var(--light-green);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Customer List */
+        .customer-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .customer-item {
+            background: var(--white);
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .customer-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .customer-info p {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        .call-btn {
+            background-color: var(--light-green);
+            color: var(--dark-green);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .call-btn:hover {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.8rem;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-green);
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <button class="menu-btn"><i class="fas fa-bars"></i></button>
+        <h1>PureCall</h1>
+        <button class="menu-btn"><i class="fas fa-search"></i></button>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- Add Customer Form -->
+        <div class="card">
+            <h2>Add Professional</h2>
+            <form id="addCustomerForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="custName" placeholder="e.g. John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Profession / Service</label>
+                    <input type="text" id="custProfession" placeholder="e.g. Plumber, Electrician" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="custPhone" placeholder="e.g. +91 9876543210" required>
+                </div>
+                <button type="submit" class="btn-submit">Save Contact</button>
+            </form>
+        </div>
+
+        <!-- Customer List -->
+        <h2 style="margin-bottom: 12px; color: var(--text-dark);">Saved Contacts</h2>
+        <div class="customer-list" id="customerList">
+            <!-- Customers will be populated here by Firebase -->
+            <p style="color: var(--text-gray); font-size: 0.9rem;">Loading contacts...</p>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item active">
+            <i class="fas fa-users"></i>
+            <span>Contacts</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+    </nav>
+
+    <!-- Firebase Integration Module -->
+    <script type="module">
+        // Import the functions you need from the SDKs via CDN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } 
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbRjKDiMFagCSH6LE-ZqpyeiRnIf0onvE",
+            authDomain: "purecall.firebaseapp.com",
+            projectId: "purecall",
+            storageBucket: "purecall.firebasestorage.app",
+            messagingSenderId: "1062741652728",
+            appId: "1:1062741652728:web:f8792621a87a14bbf6370d",
+            measurementId: "G-85EBZ97Y7M"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        
+        // Initialize Firestore Database
+        const db = getFirestore(app);
+
+        // UI Elements
+        const form = document.getElementById('addCustomerForm');
+        const customerListEl = document.getElementById('customerList');
+
+        // Handle Form Submit to add data to Firestore
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('custName').value;
+            const profession = document.getElementById('custProfession').value;
+            const phone = document.getElementById('custPhone').value;
+
+            // Update button text to show progress
+            const submitBtn = form.querySelector('.btn-submit');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "Saving...";
+
+            try {
+                // Add a new document to the "customers" collection
+                await addDoc(collection(db, "customers"), {
+                    name: name,
+                    profession: profession,
+                    phone: phone,
+                    createdAt: new Date()
+                });
+                
+                // Clear the form
+                form.reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Error saving contact. Check console for details.");
+            } finally {
+                submitBtn.innerText = originalText;
+            }
+        });
+
+        // Real-time listener to fetch and display customers
+        const q = query(collection(db, "customers"), orderBy("createdAt", "desc"));
+        
+        onSnapshot(q, (snapshot) => {
+            customerListEl.innerHTML = ''; // Clear loading text
+            
+            if (snapshot.empty) {
+                customerListEl.innerHTML = '<p style="color: #6b7280;">No contacts saved yet.</p>';
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const customer = doc.data();
+                
+                // Create customer card element
+                const customerDiv = document.createElement('div');
+                customerDiv.className = 'customer-item';
+                
+                customerDiv.innerHTML = `
+                    <div class="customer-info">
+                        <h3>${customer.name}</h3>
+                        <p><i class="fas fa-briefcase" style="margin-right:5px;"></i>${customer.profession}</p>
+                        <p><i class="fas fa-phone" style="margin-right:5px;"></i>${customer.phone}</p>
+                    </div>
+                    <a href="tel:${customer.phone}" class="call-btn">
+                        <i class="fas fa-phone-alt"></i>
+                    </a>
+                `;
+                
+                customerListEl.appendChild(customerDiv);
+            });
+        }, (error) => {
+            console.error("Error fetching contacts: ", error);
+            // Ignore missing index error during early dev unless you want to set it up in Firebase Console
+            if(error.message.includes('index')) {
+                customerListEl.innerHTML = '<p style="color: #ef4444;">Please click the link in the console to build the Firestore index.</p>';
+            }
+        });
+
+    </script>
+</body>
+</html>
