@@ -8,6 +8,7 @@
     <style>
         :root {
             --primary-green: #10b981; 
+            --dark-green: #047857;
             --light-green: #e6f8f1;
             --white: #ffffff;
             --bg-color: #f9fafb;
@@ -15,7 +16,6 @@
             --text-gray: #6b7280;
             --border-color: #f3f4f6;
             --danger-red: #ef4444;
-            --pure-black: #000000;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -26,9 +26,7 @@
         .icon-btn { background: none; border: none; font-size: 1.4rem; color: var(--text-dark); cursor: pointer; }
         
         /* Logo Styles */
-        .logo { font-size: 1.5rem; font-weight: 800; }
-        .logo-pure { color: var(--pure-black); }
-        .logo-call { color: var(--primary-green); }
+        .logo { font-size: 1.5rem; font-weight: 800; color: var(--primary-green); }
 
         /* Search Input */
         .search-container {
@@ -48,7 +46,7 @@
         }
 
         /* Main Content Area */
-        main { flex: 1; overflow-y: auto; padding-bottom: 90px; position: relative; }
+        main { flex: 1; overflow-y: auto; padding-bottom: 100px; position: relative; } /* Increased padding for bottom elements */
         
         /* Views */
         .view-section { display: none; padding: 20px; }
@@ -77,16 +75,17 @@
 
         /* Crafted Footer (Home) */
         .crafted-footer { text-align: center; margin-top: 40px; padding: 20px 0; border-top: 1px solid var(--border-color); }
-        .crafted-footer h2 { font-size: 1.5rem; font-weight: 800; color: #a1a1aa; margin-bottom: 8px; letter-spacing: -1px; }
-        .crafted-footer p { font-size: 0.85rem; color: var(--text-gray); margin-bottom: 2px;}
-        .crafted-footer .founder-text { font-size: 0.75rem; color: #9ca3af; margin-top: 5px; }
+        .crafted-footer h2 { font-size: 1.4rem; font-weight: 800; color: #9ca3af; margin-bottom: 12px; line-height: 1.2; letter-spacing: -0.5px;}
+        .crafted-footer p { font-size: 0.85rem; color: #9ca3af; margin-bottom: 4px; font-weight: 500;}
 
         /* Profile View Styles */
         .profile-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
         .profile-text-area h2 { font-size: 1.4rem; color: var(--text-dark); margin-bottom: 4px;}
         .profile-text-area h2 span { font-weight: bold; }
         .profile-text-area p { color: var(--text-gray); font-size: 0.85rem; }
-        .profile-pic { width: 60px; height: 60px; border-radius: 50%; background: var(--light-green); color: var(--primary-green); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; overflow: hidden; }
+        
+        /* New Gradient Profile Pic */
+        .profile-pic { width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(135deg, var(--light-green) 0%, var(--primary-green) 100%); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; overflow: hidden; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Donation Section */
@@ -95,7 +94,14 @@
         .donation-card p { font-size: 0.85rem; color: var(--text-gray); margin-bottom: 15px; line-height: 1.5; }
         .qr-box { background: var(--bg-color); padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 15px; border: 1px solid var(--border-color); }
         .qr-box img { width: 150px; height: 150px; object-fit: contain; }
-        .upi-id { background: var(--light-green); color: var(--primary-green); padding: 8px 15px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; display: inline-block; border: 1px dashed var(--primary-green); }
+        
+        /* Clean UPI ID */
+        .upi-id { background: var(--light-green); color: var(--dark-green); padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 1rem; display: inline-block; border: none; }
+        
+        /* Contact Founder Button */
+        .btn-founder { display: inline-block; margin-top: 15px; padding: 12px 20px; background: var(--white); color: var(--text-dark); border: 1px solid var(--border-color); border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: background 0.3s; width: 100%; }
+        .btn-founder i { color: var(--primary-green); margin-right: 8px; }
+        .btn-founder:active { background: var(--bg-color); }
 
         .settings-list { background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 20px; transition: background-color 0.3s, border-color 0.3s; }
         .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; text-decoration: none; }
@@ -104,7 +110,7 @@
         .settings-item-left i { color: var(--primary-green); font-size: 1.2rem; width: 24px; text-align: center; }
         .settings-item i.fa-chevron-right { color: #d1d5db; }
 
-        .btn-logout { width: 100%; background: #fff5f5; color: var(--danger-red); border: 1px solid #fee2e2; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
+        .btn-logout { width: 100%; background: #fff5f5; color: var(--danger-red); border: 1px solid #fee2e2; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; margin-bottom: 40px; } /* Added margin bottom to fix hiding issue */
         .btn-logout:active { background: #fee2e2; }
 
         /* Toggle Switch */
@@ -136,9 +142,9 @@
         .sidebar-links li a { display: flex; align-items: center; padding: 18px 20px; color: var(--text-dark); text-decoration: none; font-size: 1rem; font-weight: 500; gap: 15px; }
         .sidebar-links li a i { color: var(--text-gray); width: 20px; text-align: center; font-size: 1.1rem;}
         
-        /* Footer in Sidebar (PureCall Design) */
+        /* Footer in Sidebar */
         .sidebar-footer { padding: 20px; text-align: center; border-top: 1px solid var(--border-color); }
-        .sidebar-footer-title { font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; }
+        .sidebar-footer-title { font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; color: var(--primary-green); }
         .sidebar-footer-sub { color: var(--text-gray); font-size: 0.8rem; font-weight: 500; }
 
         .modal { position: fixed; top: 100%; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; transition: top 0.3s ease-in-out, background-color 0.3s; display: flex; flex-direction: column; }
@@ -160,21 +166,21 @@
     <!-- Sidebar Menu -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
-        <!-- Sidebar Header (PureCall) -->
+        <!-- Sidebar Header (PureCall Green) -->
         <div class="sidebar-header">
-            <div class="logo"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></div>
+            <div class="logo">PureCall</div>
             <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
         </div>
         <ul class="sidebar-links">
-            <li><a href="https://abhivision.in" target="_blank"><i class="fas fa-gift"></i> AV GIFT Frames</a></li>
-            <li><a href="#"><i class="fas fa-lock"></i> Privacy Policy</a></li>
-            <li><a href="#"><i class="fas fa-file-alt"></i> Terms & Conditions</a></li>
+            <li><a href="https://abhivision.in" target="_blank"><i class="fas fa-gift"></i> AV Gift Frames</a></li>
+            <li><a href="https://pureorder.in" target="_blank"><i class="fas fa-shopping-bag"></i> PureOrder</a></li>
+            <!-- Donation links to Profile Section -->
+            <li><a href="#" onclick="switchTab('settings'); toggleSidebar();"><i class="fas fa-hand-holding-heart"></i> Donation</a></li>
             <li><a href="#" onclick="openModal('helpModal'); toggleSidebar();"><i class="far fa-question-circle"></i> Help & Support</a></li>
-            <li><a href="#" onclick="openModal('aboutModal'); toggleSidebar();"><i class="fas fa-shield-alt"></i> About Us</a></li>
+            <li><a href="#" onclick="openModal('aboutModal'); toggleSidebar();"><i class="fas fa-info-circle"></i> About Us</a></li>
         </ul>
-        <!-- FIXED: Sidebar Footer (PureCall) -->
         <div class="sidebar-footer">
-            <div class="sidebar-footer-title"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></div>
+            <div class="sidebar-footer-title">PureCall</div>
             <div class="sidebar-footer-sub">Founded by Abhishek Sahoo</div>
         </div>
     </div>
@@ -182,7 +188,7 @@
     <!-- Header -->
     <header>
         <button class="icon-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-        <div class="logo"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></div>
+        <div class="logo">PureCall</div>
         <button class="icon-btn" id="searchBtnIcon" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
     </header>
     
@@ -208,11 +214,11 @@
 
             <div class="customer-list" id="customerList"></div>
 
-            <!-- Crafted Footer -->
+            <!-- Crafted Footer (Updated Text & Uniform Colors) -->
             <div class="crafted-footer" id="craftedFooter" style="display: none;">
-                <h2>Live<br>it up!</h2>
+                <h2>Everyone You Need.<br>One Place</h2>
                 <p>Crafted with <span style="color: #ef4444;">❤</span> under AbhiVision</p>
-                <div class="founder-text">Founded by Abhishek Sahoo</div>
+                <p>Founded by Abhishek Sahoo</p>
             </div>
         </section>
 
@@ -223,6 +229,7 @@
                     <h2>Hello, <span id="profileNameSpan">User</span></h2>
                     <p id="profileEmailSpan">Loading...</p>
                 </div>
+                <!-- Profile Pic with Gradient handled by JS -->
                 <div class="profile-pic" id="profilePicBox">
                     <i class="fas fa-user"></i>
                 </div>
@@ -230,16 +237,21 @@
 
             <!-- Donation Section -->
             <div class="donation-card">
-                <h3>Support PureCall Project</h3>
+                <h3 style="color: var(--primary-green);">Support PureCall</h3>
                 <p>PureCall is totally free and we didn't earn a single percent profit from this app. To keep this app working, you can donate us.</p>
                 
                 <div class="qr-box">
-                    <!-- FIXED: Auto-generating UPI QR if image is missing -->
                     <img src="donation-qr.jpg" alt="Donation QR Code" 
                          onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=techie.abhishek@fam%26pn=PureCall%26cu=INR';">
                 </div>
                 <div>
+                    <!-- Clean UPI ID Background -->
                     <div class="upi-id">techie.abhishek@fam</div>
+                </div>
+                
+                <!-- Contact Founder Button (Replace +919999999999 with your actual number below!) -->
+                <div>
+                    <a href="tel:+919999999999" class="btn-founder"><i class="fas fa-phone-alt"></i> Contact PureCall Founder</a>
                 </div>
             </div>
 
@@ -331,7 +343,7 @@
         </div>
         <div class="modal-content">
             <div style="text-align: center; margin-top: 20px; margin-bottom: 30px;">
-                 <h2 style="font-size: 1.8rem; margin-bottom: 10px;"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></h2>
+                 <h2 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--primary-green);">PureCall</h2>
             </div>
             <div style="background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
                 <i class="fas fa-headphones" style="font-size: 2.5rem; color: var(--primary-green); margin-bottom: 15px;"></i>
@@ -342,7 +354,7 @@
         </div>
     </div>
 
-    <!-- Modal: About Us -->
+    <!-- Modal: About Us (New Professional Text) -->
     <div class="modal" id="aboutModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
@@ -350,9 +362,17 @@
             <div style="width: 24px;"></div>
         </div>
         <div class="modal-content">
-            <div style="text-align: center; margin-top: 30px;">
-                <h1 style="margin-bottom: 10px;"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></h1>
-                <p style="color: var(--text-gray); line-height: 1.6;">Developed by AbhiVision.<br>Your secure digital diary for all professional service contacts.</p>
+            <div style="text-align: center; margin-top: 30px; padding: 0 10px;">
+                <h1 style="margin-bottom: 20px; color: var(--primary-green);">PureCall</h1>
+                <p style="color: var(--text-gray); line-height: 1.8; font-size: 1rem; text-align: justify; margin-bottom: 20px;">
+                    PureCall was designed with a simple but powerful vision: to keep your most important professional contacts organized, easily accessible, and completely private. 
+                </p>
+                <p style="color: var(--text-gray); line-height: 1.8; font-size: 1rem; text-align: justify;">
+                    Whether you need a plumber in an emergency, a trusted electrician, or a contractor for your home, PureCall ensures that everyone you need is just one tap away. Developed with passion and securely synced for your convenience.
+                </p>
+                <div style="margin-top: 40px; color: var(--text-dark); font-weight: bold;">
+                    Developed by AbhiVision
+                </div>
             </div>
         </div>
     </div>
@@ -431,7 +451,6 @@
                 document.documentElement.style.setProperty('--border-color', '#374151');
                 document.documentElement.style.setProperty('--light-green', '#064e3b');
                 document.documentElement.style.setProperty('--text-gray', '#9ca3af');
-                document.documentElement.style.setProperty('--pure-black', '#ffffff'); 
             } else {
                 document.documentElement.style.setProperty('--bg-color', '#f9fafb');
                 document.documentElement.style.setProperty('--white', '#ffffff');
@@ -439,7 +458,6 @@
                 document.documentElement.style.setProperty('--border-color', '#f3f4f6');
                 document.documentElement.style.setProperty('--light-green', '#e6f8f1');
                 document.documentElement.style.setProperty('--text-gray', '#6b7280');
-                document.documentElement.style.setProperty('--pure-black', '#000000');
             }
         });
 
@@ -534,8 +552,12 @@
                 let firstName = user.displayName ? user.displayName.split(' ')[0] : "User";
                 document.getElementById('profileNameSpan').innerText = firstName;
                 document.getElementById('profileEmailSpan').innerText = user.email;
+                
+                // Profile avatar letter gradient logic
                 if(user.photoURL) {
                     document.getElementById('profilePicBox').innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
+                } else {
+                    document.getElementById('profilePicBox').innerHTML = firstName.charAt(0).toUpperCase();
                 }
 
                 const q = query(collection(db, "customers"), where("userId", "==", user.uid));
