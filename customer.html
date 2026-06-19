@@ -91,7 +91,7 @@
 
         /* Donation Section */
         .donation-card { background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 20px; text-align: center; }
-        .donation-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text-dark); }
+        .donation-card h3 { font-size: 1.1rem; margin-bottom: 10px; color: var(--primary-green); }
         .donation-card p { font-size: 0.85rem; color: var(--text-gray); margin-bottom: 15px; line-height: 1.5; }
         .qr-box { background: var(--bg-color); padding: 15px; border-radius: 12px; display: inline-block; margin-bottom: 15px; border: 1px solid var(--border-color); }
         .qr-box img { width: 150px; height: 150px; object-fit: contain; }
@@ -136,11 +136,9 @@
         .sidebar-links li a { display: flex; align-items: center; padding: 18px 20px; color: var(--text-dark); text-decoration: none; font-size: 1rem; font-weight: 500; gap: 15px; }
         .sidebar-links li a i { color: var(--text-gray); width: 20px; text-align: center; font-size: 1.1rem;}
         
-        /* Footer in Sidebar (PureOrder Design) */
+        /* Footer in Sidebar (PureCall Design) */
         .sidebar-footer { padding: 20px; text-align: center; border-top: 1px solid var(--border-color); }
         .sidebar-footer-title { font-weight: bold; margin-bottom: 5px; font-size: 1.1rem; }
-        .sidebar-logo-pure { color: var(--pure-black); }
-        .sidebar-logo-order { color: #f97316; /* Orange */ }
         .sidebar-footer-sub { color: var(--text-gray); font-size: 0.8rem; font-weight: 500; }
 
         .modal { position: fixed; top: 100%; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; transition: top 0.3s ease-in-out, background-color 0.3s; display: flex; flex-direction: column; }
@@ -159,8 +157,10 @@
 </head>
 <body>
 
+    <!-- Sidebar Menu -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
+        <!-- Sidebar Header (PureCall) -->
         <div class="sidebar-header">
             <div class="logo"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></div>
             <button class="sidebar-close" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
@@ -172,25 +172,30 @@
             <li><a href="#" onclick="openModal('helpModal'); toggleSidebar();"><i class="far fa-question-circle"></i> Help & Support</a></li>
             <li><a href="#" onclick="openModal('aboutModal'); toggleSidebar();"><i class="fas fa-shield-alt"></i> About Us</a></li>
         </ul>
+        <!-- FIXED: Sidebar Footer (PureCall) -->
         <div class="sidebar-footer">
-            <div class="sidebar-footer-title"><span class="sidebar-logo-pure">Pure</span><span class="sidebar-logo-order">Order</span></div>
+            <div class="sidebar-footer-title"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></div>
             <div class="sidebar-footer-sub">Founded by Abhishek Sahoo</div>
         </div>
     </div>
 
+    <!-- Header -->
     <header>
         <button class="icon-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
         <div class="logo"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></div>
         <button class="icon-btn" id="searchBtnIcon" onclick="toggleSearch()"><i class="fas fa-search"></i></button>
     </header>
     
+    <!-- Hidden Search Bar -->
     <div class="search-container" id="searchContainer">
         <input type="text" class="search-input" id="searchInput" placeholder="Search name or category...">
     </div>
 
     <main>
         
+        <!-- HOME VIEW -->
         <section id="homeView" class="view-section active">
+            <!-- Filter Container -->
             <div class="filters" id="filterContainer">
                 <div class="chip active" onclick="setFilter('All', this)">All</div>
             </div>
@@ -203,6 +208,7 @@
 
             <div class="customer-list" id="customerList"></div>
 
+            <!-- Crafted Footer -->
             <div class="crafted-footer" id="craftedFooter" style="display: none;">
                 <h2>Live<br>it up!</h2>
                 <p>Crafted with <span style="color: #ef4444;">❤</span> under AbhiVision</p>
@@ -210,6 +216,7 @@
             </div>
         </section>
 
+        <!-- PROFILE VIEW -->
         <section id="settingsView" class="view-section">
             <div class="profile-header">
                 <div class="profile-text-area">
@@ -221,12 +228,15 @@
                 </div>
             </div>
 
+            <!-- Donation Section -->
             <div class="donation-card">
-                <h3 style="color: var(--primary-green);">Support PureCall Project</h3>
+                <h3>Support PureCall Project</h3>
                 <p>PureCall is totally free and we didn't earn a single percent profit from this app. To keep this app working, you can donate us.</p>
                 
                 <div class="qr-box">
-                    <img src="donation-qr.jpg" alt="Scan to Donate" onerror="this.src='https://via.placeholder.com/150?text=QR+Code+Missing'">
+                    <!-- FIXED: Auto-generating UPI QR if image is missing -->
+                    <img src="donation-qr.jpg" alt="Donation QR Code" 
+                         onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=techie.abhishek@fam%26pn=PureCall%26cu=INR';">
                 </div>
                 <div>
                     <div class="upi-id">techie.abhishek@fam</div>
@@ -234,6 +244,7 @@
             </div>
 
             <div class="settings-list">
+                <!-- Dark Mode Toggle -->
                 <div class="settings-item">
                     <div class="settings-item-left">
                         <i class="fas fa-moon"></i> Dark Mode
@@ -243,6 +254,7 @@
                         <span class="slider"></span>
                     </label>
                 </div>
+                <!-- Export Feature -->
                 <a href="#" class="settings-item" id="exportBtn">
                     <div class="settings-item-left">
                         <i class="fas fa-file-export"></i> Export Contacts
@@ -274,6 +286,7 @@
         </a>
     </nav>
 
+    <!-- Modal: Add Contact -->
     <div class="modal" id="addModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('addModal')"><i class="fas fa-arrow-left"></i></button>
@@ -309,6 +322,7 @@
         </div>
     </div>
 
+    <!-- Modal: Help & Support -->
     <div class="modal" id="helpModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('helpModal')"><i class="fas fa-arrow-left"></i></button>
@@ -317,7 +331,7 @@
         </div>
         <div class="modal-content">
             <div style="text-align: center; margin-top: 20px; margin-bottom: 30px;">
-                 <h2 style="font-size: 1.8rem; margin-bottom: 10px;"><span style="color: var(--pure-black);">Pure</span><span style="color: var(--primary-green);">Call</span></h2>
+                 <h2 style="font-size: 1.8rem; margin-bottom: 10px;"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></h2>
             </div>
             <div style="background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02);">
                 <i class="fas fa-headphones" style="font-size: 2.5rem; color: var(--primary-green); margin-bottom: 15px;"></i>
@@ -328,6 +342,7 @@
         </div>
     </div>
 
+    <!-- Modal: About Us -->
     <div class="modal" id="aboutModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
@@ -336,7 +351,7 @@
         </div>
         <div class="modal-content">
             <div style="text-align: center; margin-top: 30px;">
-                <h1 style="margin-bottom: 10px;"><span style="color: var(--pure-black);">Pure</span><span style="color: var(--primary-green);">Call</span></h1>
+                <h1 style="margin-bottom: 10px;"><span class="logo-pure">Pure</span><span class="logo-call">Call</span></h1>
                 <p style="color: var(--text-gray); line-height: 1.6;">Developed by AbhiVision.<br>Your secure digital diary for all professional service contacts.</p>
             </div>
         </div>
@@ -491,6 +506,7 @@
         }
     </script>
 
+    <!-- Firebase Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
