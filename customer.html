@@ -10,7 +10,7 @@
             --primary-green: #10b981; 
             --light-green: #e6f8f1;
             --white: #ffffff;
-            --bg-color: #ffffff;
+            --bg-color: #f9fafb;
             --text-dark: #1f2937;
             --text-gray: #6b7280;
             --border-color: #f3f4f6;
@@ -18,11 +18,11 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-color); color: var(--text-dark); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        body { background-color: var(--bg-color); color: var(--text-dark); height: 100vh; overflow: hidden; display: flex; flex-direction: column; transition: background-color 0.3s, color 0.3s; }
 
         /* Header */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--white); z-index: 10; }
-        .icon-btn { background: none; border: none; font-size: 1.4rem; color: #4b5563; cursor: pointer; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--white); z-index: 10; border-bottom: 1px solid var(--border-color); transition: background-color 0.3s, border-color 0.3s; }
+        .icon-btn { background: none; border: none; font-size: 1.4rem; color: var(--text-dark); cursor: pointer; }
         .logo { color: var(--primary-green); font-size: 1.4rem; font-weight: 700; }
 
         /* Main Content Area */
@@ -30,36 +30,38 @@
         
         /* Views */
         .view-section { display: none; padding: 20px; }
-        .view-section.active { display: block; }
+        .view-section.active { display: block; animation: fadeIn 0.3s ease-in-out; }
 
-        /* Filters (Home View) */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Filters */
         .filters { display: flex; gap: 10px; padding: 0 0 16px 0; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--border-color); margin-bottom: 15px;}
         .filters::-webkit-scrollbar { display: none; }
-        .chip { padding: 8px 16px; border-radius: 20px; border: 1px solid #e5e7eb; background: var(--white); color: var(--text-gray); font-size: 0.9rem; font-weight: 500; white-space: nowrap; cursor: pointer; }
+        .chip { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--white); color: var(--text-gray); font-size: 0.9rem; font-weight: 500; white-space: nowrap; cursor: pointer; transition: background-color 0.3s, border-color 0.3s; }
         .chip.active { background: var(--light-green); color: var(--primary-green); border-color: var(--light-green); }
 
         /* Empty State */
         .empty-state { display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-top: 40px; }
         .empty-icon { width: 80px; height: 80px; background: var(--light-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary-green); margin-bottom: 20px; }
-        .empty-state h2 { font-size: 1.2rem; margin-bottom: 8px; }
+        .empty-state h2 { font-size: 1.2rem; margin-bottom: 8px; color: var(--text-dark); }
         .empty-state p { color: var(--text-gray); font-size: 0.95rem; max-width: 250px; }
 
         /* Customer List */
         .customer-list { display: flex; flex-direction: column; gap: 12px; }
-        .customer-item { background: var(--white); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .customer-info h3 { font-size: 1.1rem; margin-bottom: 4px; }
+        .customer-item { background: var(--white); padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: background-color 0.3s, border-color 0.3s; }
+        .customer-info h3 { font-size: 1.1rem; margin-bottom: 4px; color: var(--text-dark); }
         .customer-info p { font-size: 0.85rem; color: var(--text-gray); }
         .call-btn { background-color: var(--light-green); color: var(--primary-green); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 1.1rem; }
 
         /* Settings View Styles */
-        .profile-card { text-align: center; padding: 30px 20px; background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .profile-card { text-align: center; padding: 30px 20px; background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02); transition: background-color 0.3s, border-color 0.3s; }
         .profile-pic { width: 80px; height: 80px; border-radius: 50%; background: var(--light-green); color: var(--primary-green); display: inline-flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 15px; overflow: hidden; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-name { font-size: 1.3rem; font-weight: bold; margin-bottom: 5px; }
+        .profile-name { font-size: 1.3rem; font-weight: bold; margin-bottom: 5px; color: var(--text-dark); }
         .profile-email { color: var(--text-gray); font-size: 0.9rem; }
 
-        .settings-list { background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 20px; }
-        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
+        .settings-list { background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 20px; transition: background-color 0.3s, border-color 0.3s; }
+        .settings-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; text-decoration: none; }
         .settings-item:last-child { border-bottom: none; }
         .settings-item-left { display: flex; align-items: center; gap: 15px; color: var(--text-dark); font-weight: 500; }
         .settings-item-left i { color: var(--primary-green); font-size: 1.2rem; width: 24px; text-align: center; }
@@ -77,39 +79,39 @@
         input:checked + .slider:before { transform: translateX(20px); }
 
         /* Bottom Navigation */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); display: flex; justify-content: space-around; align-items: center; padding: 12px 0 20px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 50; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #9ca3af; text-decoration: none; font-size: 0.75rem; gap: 4px; width: 30%; cursor: pointer; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--white); display: flex; justify-content: space-around; align-items: center; padding: 12px 0 20px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); z-index: 50; border-top: 1px solid var(--border-color); transition: background-color 0.3s, border-color 0.3s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-gray); text-decoration: none; font-size: 0.75rem; gap: 4px; width: 30%; cursor: pointer; padding: 8px 0; }
         .nav-item.active { color: var(--primary-green); }
-        .nav-item i { font-size: 1.3rem; }
+        .nav-item i { font-size: 1.3rem; margin-bottom: 2px; }
         
         .fab-container { width: 30%; display: flex; justify-content: center; }
-        .fab { background: var(--primary-green); color: var(--white); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: none; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); transform: translateY(-15px); cursor: pointer; z-index: 51; }
-        .fab.hidden { display: none; } /* Hide FAB on Settings tab */
+        .fab { background: var(--primary-green); color: #ffffff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: none; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); transform: translateY(-20px); cursor: pointer; z-index: 51; }
+        .fab.hidden { display: none; }
 
-        /* Sidebar & Modals (Same as before) */
+        /* Sidebar & Modals */
         .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 99; display: none; opacity: 0; transition: opacity 0.3s; }
-        .sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--white); z-index: 100; transition: left 0.3s ease; box-shadow: 2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--white); z-index: 100; transition: left 0.3s ease, background-color 0.3s; box-shadow: 2px 0 10px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .sidebar-header { padding: 30px 20px; background: var(--light-green); color: var(--primary-green); font-size: 1.5rem; font-weight: bold; }
         .sidebar-links { padding: 20px 0; list-style: none; }
         .sidebar-links li a { display: flex; align-items: center; padding: 15px 20px; color: var(--text-dark); text-decoration: none; font-size: 1rem; gap: 15px; border-bottom: 1px solid var(--border-color); }
         .sidebar-links li a i { color: var(--primary-green); width: 20px; text-align: center; }
 
-        .modal { position: fixed; top: 100%; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; transition: top 0.3s ease-in-out; display: flex; flex-direction: column; }
+        .modal { position: fixed; top: 100%; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 200; transition: top 0.3s ease-in-out, background-color 0.3s; display: flex; flex-direction: column; }
         .modal.active { top: 0; }
-        .modal-header { display: flex; align-items: center; padding: 20px; background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .modal-header h2 { flex: 1; text-align: center; font-size: 1.2rem; }
+        .modal-header { display: flex; align-items: center; padding: 20px; background: var(--white); box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background-color 0.3s; }
+        .modal-header h2 { flex: 1; text-align: center; font-size: 1.2rem; color: var(--text-dark); }
         .modal-content { padding: 20px; flex: 1; overflow-y: auto; }
 
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; color: var(--text-gray); font-size: 0.9rem;}
-        .form-group input { width: 100%; padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; outline: none; }
-        .btn-submit { width: 100%; background: var(--primary-green); color: white; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; }
+        .form-group input { width: 100%; padding: 14px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; outline: none; background: var(--white); color: var(--text-dark); transition: background-color 0.3s, border-color 0.3s, color 0.3s; }
+        .btn-submit { width: 100%; background: var(--primary-green); color: #ffffff; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; }
         
-        .support-card { background: var(--white); border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-top: 20px; }
+        .support-card { background: var(--white); border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color); margin-top: 20px; transition: background-color 0.3s, border-color 0.3s; }
         .support-card i { font-size: 3rem; color: var(--text-dark); margin-bottom: 15px; }
-        .support-card h3 { font-size: 1.4rem; margin-bottom: 10px; }
+        .support-card h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--text-dark); }
         .support-card p { color: var(--text-gray); font-size: 0.95rem; line-height: 1.5; margin-bottom: 25px; }
-        .btn-support { display: block; width: 100%; background: var(--primary-green); color: white; padding: 15px; border-radius: 8px; text-decoration: none; font-weight: bold; }
+        .btn-support { display: block; width: 100%; background: var(--primary-green); color: #ffffff; padding: 15px; border-radius: 8px; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -133,6 +135,7 @@
 
     <main>
         
+        <!-- HOME VIEW -->
         <section id="homeView" class="view-section active">
             <div class="filters" id="filterContainer">
                 <div class="chip active" onclick="setFilter('All', this)">All</div>
@@ -151,6 +154,7 @@
             <div class="customer-list" id="customerList"></div>
         </section>
 
+        <!-- SETTINGS VIEW -->
         <section id="settingsView" class="view-section">
             <div class="profile-card">
                 <div class="profile-pic" id="profilePic">
@@ -161,6 +165,7 @@
             </div>
 
             <div class="settings-list">
+                <!-- Dark Mode Toggle -->
                 <div class="settings-item">
                     <div class="settings-item-left">
                         <i class="fas fa-moon"></i> Dark Mode
@@ -170,12 +175,13 @@
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="settings-item" onclick="alert('Export feature coming soon!')">
+                <!-- Export Feature -->
+                <a href="#" class="settings-item" id="exportBtn">
                     <div class="settings-item-left">
                         <i class="fas fa-file-export"></i> Export Contacts
                     </div>
                     <i class="fas fa-chevron-right"></i>
-                </div>
+                </a>
             </div>
 
             <button class="btn-logout" id="logoutBtn">
@@ -186,21 +192,22 @@
     </main>
 
     <nav class="bottom-nav">
-        <div class="nav-item active" id="navHome" onclick="switchTab('home')">
+        <a href="javascript:void(0)" class="nav-item active" id="navHome" onclick="switchTab('home')">
             <i class="fas fa-home"></i>
             <span>Home</span>
-        </div>
+        </a>
         <div class="fab-container">
             <button class="fab" id="fabBtn" onclick="openModal('addModal')">
                 <i class="fas fa-plus"></i>
             </button>
         </div>
-        <div class="nav-item" id="navSettings" onclick="switchTab('settings')">
+        <a href="javascript:void(0)" class="nav-item" id="navSettings" onclick="switchTab('settings')">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
-        </div>
+        </a>
     </nav>
 
+    <!-- Modal: Add Contact -->
     <div class="modal" id="addModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('addModal')"><i class="fas fa-arrow-left"></i></button>
@@ -226,22 +233,24 @@
         </div>
     </div>
 
+    <!-- Modal: Help & Support -->
     <div class="modal" id="helpModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('helpModal')"><i class="fas fa-arrow-left"></i></button>
             <h2>Help & Support</h2>
             <div style="width: 24px;"></div>
         </div>
-        <div class="modal-content" style="background: #fdfdfd;">
+        <div class="modal-content">
             <div class="support-card">
                 <i class="fas fa-headphones"></i>
                 <h3>We're Here to Help!</h3>
                 <p>Facing an issue with the app or need assistance navigating your contacts? Reach out to our dedicated support team directly.</p>
-                <a href="mailto:contact.abhivision@gmail.com" class="btn-support"><i class="fas fa-envelope" style="color:white; margin-right:8px;"></i> Contact Support</a>
+                <a href="mailto:contact.abhivision@gmail.com" class="btn-support"><i class="fas fa-envelope" style="margin-right:8px;"></i> Contact Support</a>
             </div>
         </div>
     </div>
 
+    <!-- Modal: About Us -->
     <div class="modal" id="aboutModal">
         <div class="modal-header">
             <button class="icon-btn" onclick="closeModal('aboutModal')"><i class="fas fa-arrow-left"></i></button>
@@ -256,14 +265,17 @@
         </div>
     </div>
 
+    <!-- Global State Object to Hold Active Contacts for CSV Export -->
     <script>
-        // Tab Switching Logic
+        window.allContactsData = [];
+    </script>
+
+    <script>
+        // === 1. Tab Switching Logic ===
         function switchTab(tabName) {
-            // Reset Views
             document.getElementById('homeView').classList.remove('active');
             document.getElementById('settingsView').classList.remove('active');
             
-            // Reset Nav Items
             document.getElementById('navHome').classList.remove('active');
             document.getElementById('navSettings').classList.remove('active');
 
@@ -278,12 +290,32 @@
             } else if (tabName === 'settings') {
                 document.getElementById('settingsView').classList.add('active');
                 document.getElementById('navSettings').classList.add('active');
-                searchBtn.style.visibility = 'hidden'; // Hide search on settings
-                fabBtn.classList.add('hidden'); // Hide + button on settings
+                searchBtn.style.visibility = 'hidden'; 
+                fabBtn.classList.add('hidden'); 
             }
         }
 
-        // Sidebar Toggle
+        // === 2. Fully Functional Dark Mode ===
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('change', (e) => {
+            if(e.target.checked) {
+                document.documentElement.style.setProperty('--bg-color', '#111827');
+                document.documentElement.style.setProperty('--white', '#1f2937');
+                document.documentElement.style.setProperty('--text-dark', '#f9fafb');
+                document.documentElement.style.setProperty('--border-color', '#374151');
+                document.documentElement.style.setProperty('--light-green', '#064e3b');
+                document.documentElement.style.setProperty('--text-gray', '#9ca3af');
+            } else {
+                document.documentElement.style.setProperty('--bg-color', '#f9fafb');
+                document.documentElement.style.setProperty('--white', '#ffffff');
+                document.documentElement.style.setProperty('--text-dark', '#1f2937');
+                document.documentElement.style.setProperty('--border-color', '#f3f4f6');
+                document.documentElement.style.setProperty('--light-green', '#e6f8f1');
+                document.documentElement.style.setProperty('--text-gray', '#6b7280');
+            }
+        });
+
+        // Sidebar & Modal Functions
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -298,7 +330,6 @@
             }
         }
 
-        // Modal Open/Close
         function openModal(id) { document.getElementById(id).classList.add('active'); }
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
@@ -327,6 +358,7 @@
         }
     </script>
 
+    <!-- Firebase Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -345,22 +377,18 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // -- Authentication & Profile Logic --
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Populate Settings Profile
                 document.getElementById('profileName').innerText = user.displayName || "PureCall User";
                 document.getElementById('profileEmail').innerText = user.email;
                 if(user.photoURL) {
                     document.getElementById('profilePic').innerHTML = `<img src="${user.photoURL}" alt="Profile">`;
                 }
             } else {
-                // Not logged in? Send back to index.html
                 window.location.href = 'index.html';
             }
         });
 
-        // Logout Event
         document.getElementById('logoutBtn').addEventListener('click', () => {
             signOut(auth).then(() => {
                 window.location.href = 'index.html';
@@ -369,7 +397,6 @@
             });
         });
 
-        // -- Firestore Data Logic --
         const form = document.getElementById('addCustomerForm');
         const customerListEl = document.getElementById('customerList');
         const emptyStateEl = document.getElementById('emptyState');
@@ -395,15 +422,26 @@
             }
         });
 
+        // Track live data dynamically inside the array for export engine
         const q = query(collection(db, "customers"), orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
             customerListEl.innerHTML = ''; 
+            window.allContactsData = []; // Clear current buffer
+            
             if (snapshot.empty) {
                 emptyStateEl.style.display = 'flex';
             } else {
                 emptyStateEl.style.display = 'none';
                 snapshot.forEach((doc) => {
                     const customer = doc.data();
+                    
+                    // Save data locally for exporting
+                    window.allContactsData.push({
+                        name: customer.name || 'N/A',
+                        profession: customer.profession || 'N/A',
+                        phone: customer.phone || 'N/A'
+                    });
+
                     const customerDiv = document.createElement('div');
                     customerDiv.className = 'customer-item';
                     customerDiv.setAttribute('data-profession', customer.profession);
@@ -421,6 +459,38 @@
                 });
                 if(typeof filterContactsDOM === 'function') filterContactsDOM();
             }
+        });
+
+        // === 3. Complete Export Contacts Feature Implementation ===
+        document.getElementById('exportBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (!window.allContactsData || window.allContactsData.length === 0) {
+                alert("No contacts available to export!");
+                return;
+            }
+            
+            // Build real CSV structured string context
+            let csvContent = "Name,Profession,Phone Number\n";
+            window.allContactsData.forEach(item => {
+                // Escape quotes just in case names contain complex strings
+                let cleanName = item.name.replace(/"/g, '""');
+                let cleanProf = item.profession.replace(/"/g, '""');
+                let cleanPhone = item.phone.replace(/"/g, '""');
+                csvContent += `"${cleanName}","${cleanProf}","${cleanPhone}"\n`;
+            });
+
+            // Convert raw data to browser download link context
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const trackingLink = document.createElement('a');
+            trackingLink.setAttribute('href', url);
+            trackingLink.setAttribute('download', 'PureCall_Backup_Contacts.csv');
+            trackingLink.style.visibility = 'hidden';
+            
+            document.body.appendChild(trackingLink);
+            trackingLink.click();
+            document.body.removeChild(trackingLink);
         });
     </script>
 </body>
