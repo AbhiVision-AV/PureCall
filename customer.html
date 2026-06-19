@@ -350,11 +350,11 @@
         <div class="modal-content" style="padding: 15px;">
             <div style="text-align: center; margin-bottom: 15px;">
                 <h1 style="color: var(--primary-green); font-size: 1.8rem; margin-bottom: 5px;">PureCall</h1>
-                <p style="color: var(--text-gray); font-size: 0.95rem; font-weight: 500;">Your Professional Network, Simplified.</p>
+                <p style="color: var(--text-gray); font-size: 0.95rem; font-weight: 500;">Everyone You Need. One Place.</p>
             </div>
             
-            <div style="background: var(--white); border-radius: 12px; padding: 15px; border: 1px solid var(--border-color); margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
-                <p style="color: var(--text-dark); line-height: 1.5; font-size: 0.95rem; text-align: justify;">
+            <div style="background: var(--white); border-radius: 12px; padding: 20px 15px; border: 1px solid var(--border-color); margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
+                <p style="color: var(--text-gray); line-height: 1.6; font-size: 0.95rem; text-align: center; margin: 0 auto;">
                     PureCall was designed with a simple but powerful vision: to keep your most important professional contacts organized, easily accessible, and completely private.
                 </p>
             </div>
@@ -568,7 +568,7 @@
         window.deleteContact = async (contactId) => {
             if (confirm("Delete this contact?")) {
                 if (navigator.vibrate) {
-                    navigator.vibrate(150); // Updated to 150ms
+                    navigator.vibrate(150); 
                 }
                 try {
                     await deleteDoc(doc(db, "customers", contactId));
@@ -677,7 +677,7 @@
 
             const submitBtn = document.getElementById('saveSubmitBtn');
             
-            // 1. Phone Vibrate (150ms updated)
+            // 1. Phone Vibrate
             if (navigator.vibrate) {
                 navigator.vibrate(150); 
             }
